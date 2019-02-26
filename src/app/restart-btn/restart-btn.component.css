@@ -1,0 +1,6 @@
+button.restart-btn {
+    margin-top: 5%; 
+    width: 60%;
+    padding: 1rem ; 
+    z-index: 2;
+}

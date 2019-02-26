@@ -1,0 +1,16 @@
+.game-pad {
+    height: 100px;
+    width: 100px;
+    border: 2px solid black;
+    width: 33%; 
+    font-size: 400%;
+    padding-left: 0px;
+    padding-right: 0px;
+    color: black;
+    position: relative; 
+    
+
+}
+.game-pad:focus {
+    outline: 0;
+}  

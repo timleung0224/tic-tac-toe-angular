@@ -1,0 +1,7 @@
+<div class="container text-center">
+  <div class="row">
+    <div class="game-pad" *ngFor="let gamepad of gamepad1;" (click)="gamePadClicked($event,gamepad)">
+      {{gamepad.text}}
+    </div>
+  </div>
+</div>
