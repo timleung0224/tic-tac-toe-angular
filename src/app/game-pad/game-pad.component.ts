@@ -1,22 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { initDomAdapter } from '@angular/platform-browser/src/browser';
-import { identifierModuleUrl } from '@angular/compiler';
-import { CurrencyIndex } from '@angular/common/src/i18n/locale_data';
-
-class Gamepad {
-  id: string; position: string[]; text: string; clicked: boolean;
-}
-const gamepads1: Gamepad[] = [
-  { id: '0', position: ['0', '0'], text: '', clicked: false, },
-  { id: '1', position: ['0', '1'], text: '', clicked: false, },
-  { id: '2', position: ['0', '2'], text: '', clicked: false, },
-  { id: '3', position: ['1', '0'], text: '', clicked: false, },
-  { id: '4', position: ['1', '1'], text: '', clicked: false, },
-  { id: '5', position: ['1', '2'], text: '', clicked: false, },
-  { id: '6', position: ['2', '0'], text: '', clicked: false, },
-  { id: '7', position: ['2', '1'], text: '', clicked: false, },
-  { id: '8', position: ['2', '2'], text: '', clicked: false, }
-];
+import { GameServiceService } from '../service/game-service.service';
+import { GameStorage } from '../service/game-service.storage';
 
 @Component({
   selector: 'app-game-pad',
@@ -24,20 +8,25 @@ const gamepads1: Gamepad[] = [
   templateUrl: './game-pad.component.html',
 })
 export class GamePadComponent implements OnInit {
-  turn = false;
-  public gamepad1 = gamepads1;
+
+  constructor(public gameservice: GameServiceService, public gamestorage: GameStorage) { }
   ngOnInit() {
+    this.gameservice.loadGame();
+    // this.gameservice.gameRestart();
   }
-  gamePadClicked(event: any, a: any) {
-    if (a.clicked === false) {
-      a.clicked = true;
-      if (this.turn === false) {
-        a.text = 'O';
-        this.turn = true;
-      } else {
-        a.text = 'X';
-        this.turn = false;
-      }
+  gamePadClicked(gamepad: any) {
+    if (!gamepad.status) {
+      gamepad.status = true;
+      this.gameservice.drawGamePad(gamepad);
+      this.gameservice.checkWinner();
+      this.gameservice.turn++;
+      this.gamestorage.setBoard(this.gameservice.board);
+      this.gamestorage.setGamePad(this.gameservice.gamepad1);
+      this.gamestorage.setPlayer(this.gameservice.player);
+      this.gamestorage.setTextbox(this.gameservice.textbox1.text);
+      this.gamestorage.setTurn(this.gameservice.turn);
+
+
     }
   }
 }
