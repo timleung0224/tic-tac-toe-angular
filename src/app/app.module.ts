@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { GamePadComponent } from './game-pad/game-pad.component';
 import { RestartBtnComponent } from './restart-btn/restart-btn.component';
 import { GameServiceService } from './service/game-service.service';
+import { GameStorage } from './service/game-service.storage';
 
 
 @NgModule({
@@ -24,7 +25,7 @@ import { GameServiceService } from './service/game-service.service';
     NgbModule,
     AppRoutingModule
   ],
-  providers: [GameServiceService],
+  providers: [GameServiceService, GameStorage],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

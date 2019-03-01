@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GameServiceService } from '../service/game-service.service';
 
 @Component({
   selector: 'app-restart-btn',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RestartBtnComponent implements OnInit {
 
-  constructor() { }
+  constructor(public gameservice: GameServiceService) { }
 
   ngOnInit() {
   }
-
+  reatartBtnClicked() {
+    this.gameservice.gameRestart();
+  }
 }
