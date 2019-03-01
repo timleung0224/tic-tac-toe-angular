@@ -12,7 +12,7 @@ export class RestartBtnComponent implements OnInit {
 
   ngOnInit() {
   }
-  reatartBtnClicked() {
+  restartBtnClicked() {
     this.gameservice.gameRestart();
   }
 }

@@ -1,27 +1,77 @@
 import { Injectable } from '@angular/core';
 import * as CONFIG from './../config/config';
 
-
-
-
-
 @Injectable()
 export class GameServiceService {
-  public gamepad1 = CONFIG.gamepads1;
+  public gamePad = CONFIG.gamePadSatus;
   public turn = 0;
-  public textbox1 = CONFIG.textbox;
-  public player = true;
-  public board = [['', '', ''], ['', '', ''], ['', '', '']];
+  public gameNoticeBox = CONFIG.gameNoticeBox;
+  player = true;
+  board = [['', '', ''], ['', '', ''], ['', '', '']];
   constructor() { }
+
+  checkWinner() {
+    if (this.isARow() || this.isAColum() || this.isADiagonals()) {
+      this.gameEnd();
+    } else {
+      if (this.turn === 8) {
+        this.gameNoticeBox.text = 'Tie';
+      }
+    }
+  }
+
+  gameRestart() {
+    for (let i = 0; i < 9; i++) {
+      this.gamePad[i].status = false;
+      this.gamePad[i].text = '';
+    }
+    this.gameNoticeBox.text = 'Player1 click a box';
+    this.player = true;
+    this.board = [['', '', ''], ['', '', ''], ['', '', '']];
+    this.turn = 0;
+    this.setGameData();
+  }
+
+  drawGamePad(gamePad) {
+    if (this.player) {
+      gamePad.text = 'O';
+      const [x, y] = gamePad.position;
+      this.board[x][y] = gamePad.text;
+      this.gameNoticeBox.text = 'Player2 click a box';
+      this.player = false;
+    } else {
+      gamePad.text = 'X';
+      const [x, y] = gamePad.position;
+      this.board[x][y] = gamePad.text;
+      this.player = true;
+      this.gameNoticeBox.text = 'Player1 click a box';
+    }
+  }
+
+  setGameData() {
+    localStorage.setItem('save-board', JSON.stringify(this.board));
+    localStorage.setItem('save-player', JSON.stringify(this.player));
+    localStorage.setItem('save-textbox', this.gameNoticeBox.text);
+    localStorage.setItem('save-turn', JSON.stringify(this.turn));
+    localStorage.setItem('save-game-pad', JSON.stringify(this.gamePad));
+  }
+
+  getGameData() {
+    this.board = JSON.parse(localStorage.getItem('save-board'));
+    this.gamePad = JSON.parse(localStorage.getItem('save-game-pad'));
+    this.player = JSON.parse(localStorage.getItem('save-player'));
+    this.gameNoticeBox.text = localStorage.getItem('save-textbox');
+    this.turn = JSON.parse(localStorage.getItem('save-turn'));
+  }
 
   private gameEnd() {
     for (let i = 0; i < 9; i++) {
-      this.gamepad1[i].status = true;
+      this.gamePad[i].status = true;
     }
     if (this.player === false) {
-      this.textbox1.text = 'Player1 wins';
+      this.gameNoticeBox.text = 'Player1 wins';
     } else {
-      this.textbox1.text = 'Player2 wins';
+      this.gameNoticeBox.text = 'Player2 wins';
     }
   }
 
@@ -50,56 +100,5 @@ export class GameServiceService {
     }
   }
 
-  checkWinner() {
-    if (this.isARow() || this.isAColum() || this.isADiagonals()) {
-      this.gameEnd();
-    } else {
-
-      if (this.turn === 8) {
-        this.textbox1.text = 'Tie';
-      }
-    }
-  }
-
-  gameRestart() {
-    for (let i = 0; i < 9; i++) {
-      this.gamepad1[i].status = false;
-      this.gamepad1[i].text = '';
-    }
-    this.textbox1.text = 'Player1 click a box';
-    this.player = true;
-    this.board = [['', '', ''], ['', '', ''], ['', '', '']];
-    this.turn = 0;
-  }
-
-  drawGamePad(gamepad) {
-    if (this.player) {
-      gamepad.text = 'O';
-      const [x, y] = gamepad.position;
-      this.board[x][y] = gamepad.text;
-      this.textbox1.text = 'Player2 click a box';
-      this.player = false;
-    } else {
-      gamepad.text = 'X';
-      const [x, y] = gamepad.position;
-      this.board[x][y] = gamepad.text;
-      this.player = true;
-      this.textbox1.text = 'Player1 click a box';
-    }
-  }
-
-  loadGame() {
-    const gameboardsave = JSON.parse(localStorage.getItem('save-board'));
-    const gamepadsave = JSON.parse(localStorage.getItem('save-game-pad'));
-    const playersave = JSON.parse(localStorage.getItem('save-player'));
-    const textboxsave = localStorage.getItem('save-textbox');
-    const turnsave = JSON.parse(localStorage.getItem('save-turn'));
-    this.board = gameboardsave;
-    this.gamepad1 = gamepadsave;
-    this.player = playersave;
-    this.textbox1.text = textboxsave;
-    this.turn = turnsave;
-    // console.log(gamepadsave);
-  }
 }
 

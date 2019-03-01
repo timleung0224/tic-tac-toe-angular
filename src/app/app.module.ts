@@ -4,18 +4,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TexboxComponent } from './texbox/texbox.component';
+import { GameNoticeBoxComponent } from './game-notice-box/game-notice-box.component';
 import { HeaderComponent } from './header/header.component';
 import { GamePadComponent } from './game-pad/game-pad.component';
 import { RestartBtnComponent } from './restart-btn/restart-btn.component';
 import { GameServiceService } from './service/game-service.service';
-import { GameStorage } from './service/game-service.storage';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TexboxComponent,
+    GameNoticeBoxComponent,
     HeaderComponent,
     GamePadComponent,
     RestartBtnComponent
@@ -25,7 +25,7 @@ import { GameStorage } from './service/game-service.storage';
     NgbModule,
     AppRoutingModule
   ],
-  providers: [GameServiceService, GameStorage],
+  providers: [GameServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

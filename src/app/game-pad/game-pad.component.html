@@ -1,7 +1,7 @@
 <div class="container text-center">
   <div class="row">
-    <div class="game-pad" *ngFor="let gamepad of this.gameservice.gamepad1;" (click)="gamePadClicked(gamepad)">
-      {{gamepad.text}}
+    <div class="game-pad" *ngFor="let gamepad of this.gamePad;" (click)="gamePadClicked(gamepad)">
+      {{ gamepad.text }}
     </div>
   </div>
 </div>

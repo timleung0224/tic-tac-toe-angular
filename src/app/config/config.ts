@@ -1,7 +1,7 @@
-class Gamepad {
+class GamePad {
     id: string; position: string[]; text: string; status: boolean;
 }
-export const gamepads1: Gamepad[] = [
+export const gamePadSatus: GamePad[] = [
     { id: '0', position: ['0', '0'], text: '', status: false, },
     { id: '1', position: ['0', '1'], text: '', status: false, },
     { id: '2', position: ['0', '2'], text: '', status: false, },
@@ -22,12 +22,12 @@ export const gamepads1: Gamepad[] = [
 //     { text: 'Player2 wins', },
 //     { text: 'Tie', }
 // ];
-class Textbox {
+class GameNoticeBox {
     static create(event: { text: string; }) {
         return { text: event.text };
     }
 }
-export const textbox = Textbox.create({
+export const gameNoticeBox = GameNoticeBox.create({
     text: '',
 });
 
