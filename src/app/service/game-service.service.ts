@@ -1,5 +1,16 @@
 import { Injectable } from '@angular/core';
 import * as CONFIG from './../config/config';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+
+
+
+
+
+
 
 @Injectable()
 export class GameServiceService {
@@ -7,7 +18,11 @@ export class GameServiceService {
   public turn = 0;
   public gameNoticeBox = CONFIG.gameNoticeBox;
   player = true;
+  gameData = firebase.firestore().collection('gameData').doc('01');
+  gamePadData = firebase.firestore().collection('gamePad');
   board = [['', '', ''], ['', '', ''], ['', '', '']];
+  saveBoard = '';
+
   constructor() { }
 
   checkWinner() {
@@ -29,7 +44,7 @@ export class GameServiceService {
     this.player = true;
     this.board = [['', '', ''], ['', '', ''], ['', '', '']];
     this.turn = 0;
-    this.setGameData();
+    this.resetGameData();
   }
 
   drawGamePad(gamePad) {
@@ -48,20 +63,40 @@ export class GameServiceService {
     }
   }
 
-  setGameData() {
-    localStorage.setItem('save-board', JSON.stringify(this.board));
-    localStorage.setItem('save-player', JSON.stringify(this.player));
-    localStorage.setItem('save-textbox', this.gameNoticeBox.text);
-    localStorage.setItem('save-turn', JSON.stringify(this.turn));
-    localStorage.setItem('save-game-pad', JSON.stringify(this.gamePad));
+  setGameData(gamePad) {
+    this.gamePadData.doc(`${gamePad.id}`).set({
+      status: gamePad.status,
+      text: gamePad.text,
+    });
+    // console.log(`gamePad${gamePad.id}`);
+    this.saveBoard = JSON.stringify(this.board),
+      this.gameData.set({
+        gameNoticeBox: this.gameNoticeBox,
+        player: this.player,
+        turn: this.turn,
+        board: this.saveBoard
+      });
   }
 
   getGameData() {
-    this.board = JSON.parse(localStorage.getItem('save-board'));
-    this.gamePad = JSON.parse(localStorage.getItem('save-game-pad'));
-    this.player = JSON.parse(localStorage.getItem('save-player'));
-    this.gameNoticeBox.text = localStorage.getItem('save-textbox');
-    this.turn = JSON.parse(localStorage.getItem('save-turn'));
+    this.gamePadData.get().then(snapshot => {
+      snapshot.forEach(doc => {
+        // console.log(doc.id, '=>', doc.data().text);
+        this.gamePad[doc.id].text = doc.data().text;
+        this.gamePad[doc.id].status = doc.data().status;
+        // console.log(data(doc.id).text);
+      });
+    });
+
+    this.gameData.get().then(doc => {
+      this.gameNoticeBox.text = doc.data().gameNoticeBox.text;
+      this.player = doc.data().player;
+      this.turn = doc.data().turn;
+      this.saveBoard = doc.data().board;
+      this.board = JSON.parse(this.saveBoard);
+      // console.log(doc.data().board);
+      // console.log(this.board);
+    });
   }
 
   private gameEnd() {
@@ -100,5 +135,20 @@ export class GameServiceService {
     }
   }
 
+  private resetGameData() {
+    for (let i = 0; i < 9; i++) {
+      this.gamePadData.doc(`${[i]}`).set({
+        status: this.gamePad[i].status,
+        text: this.gamePad[i].text,
+      });
+    }
+    this.saveBoard = JSON.stringify(this.board),
+      this.gameData.set({
+        gameNoticeBox: this.gameNoticeBox,
+        player: this.player,
+        turn: this.turn,
+        board: this.saveBoard
+      });
+  }
 }
 

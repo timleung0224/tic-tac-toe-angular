@@ -9,6 +9,20 @@ import { HeaderComponent } from './header/header.component';
 import { GamePadComponent } from './game-pad/game-pad.component';
 import { RestartBtnComponent } from './restart-btn/restart-btn.component';
 import { GameServiceService } from './service/game-service.service';
+import * as firebase from 'firebase/app';
+
+
+const config = {
+  apiKey: 'AIzaSyApOI3y5QUQSDWKz54RMadRF9_yLQRan_E',
+  authDomain: 'tic-tac-toe-angular-56743.firebaseapp.com',
+  databaseURL: 'https://tic-tac-toe-angular-56743',
+  projectId: 'tic-tac-toe-angular-56743',
+  storageBucket: 'tic-tac-toe-angular-56743.appspot.com',
+  messagingSenderId: '710699280063'
+};
+
+firebase.initializeApp(config);
+
 
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GameServiceService } from '../service/game-service.service';
 
 
+
 @Component({
   selector: 'app-game-pad',
   styleUrls: ['./game-pad.component.css'],
@@ -25,7 +26,7 @@ export class GamePadComponent implements OnInit {
       this.gameService.drawGamePad(gamePad);
       this.gameService.checkWinner();
       this.gameService.turn++;
-      this.gameService.setGameData();
+      this.gameService.setGameData(gamePad);
     }
   }
 }
