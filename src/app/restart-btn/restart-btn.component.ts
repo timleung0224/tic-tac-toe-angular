@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameServiceService } from '../service/game-service.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-restart-btn',
@@ -7,12 +9,21 @@ import { GameServiceService } from '../service/game-service.service';
   styleUrls: ['./restart-btn.component.css']
 })
 export class RestartBtnComponent implements OnInit {
+  constructor(public gameservice: GameServiceService, ) { }
+  click = new Subject<string>();
+  turn = this.gameservice.turn;
 
-  constructor(public gameservice: GameServiceService) { }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    this.click.pipe(
+      debounceTime(300))
+      .subscribe(() => {
+        this.gameservice.restartGameData();
+        this.gameservice.resetGameData();
+      });
   }
   restartBtnClicked() {
-    this.gameservice.gameRestart();
+    if (this.gameservice.turn > 0) {
+      this.click.next();
+    }
   }
 }
