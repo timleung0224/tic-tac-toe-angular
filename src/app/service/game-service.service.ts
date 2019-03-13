@@ -5,15 +5,15 @@ import 'firebase/auth';
 import 'firebase/firestore';
 
 @Injectable()
-export class GameServiceService {
-  gamePad = CONFIG.gamePadSatus;
-  turn = 0;
-  gameNoticeBox = CONFIG.gameNoticeBox;
-  player = 'player1';
-  gameData = firebase.firestore().collection('gameData').doc('01');
-  gamePadData = firebase.firestore().collection('gamePad');
-  board = [['', '', ''], ['', '', ''], ['', '', '']];
-  saveBoard = '';
+export class GameService {
+  public gamePad = CONFIG.gamePadSatus;
+  public turn = 0;
+  public gameNoticeBox = CONFIG.gameNoticeBox;
+  public player = 'player1';
+  private gameData = firebase.firestore().collection('gameData').doc('01');
+  private gamePadData = firebase.firestore().collection('gamePad');
+  public board = [['', '', ''], ['', '', ''], ['', '', '']];
+  private saveBoard = '';
   public restarting = false;
 
   constructor() { }

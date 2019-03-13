@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameServiceService } from '../service/game-service.service';
+import { GameService } from '../service/game-service.service';
 
 @Component({
   selector: 'app-game-notice-box',
@@ -8,11 +8,10 @@ import { GameServiceService } from '../service/game-service.service';
 })
 export class GameNoticeBoxComponent implements OnInit {
   public noticeBox: any;
-  constructor(public gameService: GameServiceService) {
+  constructor(public gameService: GameService) {
   }
 
   ngOnInit() {
     this.noticeBox = this.gameService.gameNoticeBox;
   }
-
 }

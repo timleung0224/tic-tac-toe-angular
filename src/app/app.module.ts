@@ -7,7 +7,7 @@ import { GameNoticeBoxComponent } from './game-notice-box/game-notice-box.compon
 import { HeaderComponent } from './header/header.component';
 import { GamePadComponent } from './game-pad/game-pad.component';
 import { RestartBtnComponent } from './restart-btn/restart-btn.component';
-import { GameServiceService } from './service/game-service.service';
+import { GameService } from './service/game-service.service';
 import * as firebase from 'firebase/app';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
@@ -36,7 +36,7 @@ firebase.initializeApp(config);
     NgbModule,
     AppRoutingModule
   ],
-  providers: [GameServiceService],
+  providers: [GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
