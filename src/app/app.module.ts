@@ -10,15 +10,12 @@ import { RestartBtnComponent } from './restart-btn/restart-btn.component';
 import { GameService } from './service/game-service.service';
 import * as firebase from 'firebase/app';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { environment } from '../environments/environment';
 
-const config = {
-  apiKey: 'AIzaSyApOI3y5QUQSDWKz54RMadRF9_yLQRan_E',
-  authDomain: 'tic-tac-toe-angular-56743.firebaseapp.com',
-  databaseURL: 'https://tic-tac-toe-angular-56743',
-  projectId: 'tic-tac-toe-angular-56743',
-  storageBucket: 'tic-tac-toe-angular-56743.appspot.com',
-  messagingSenderId: '710699280063'
-};
+
+
+const config = environment.FIREBASE_CONFIG;
+
 
 firebase.initializeApp(config);
 

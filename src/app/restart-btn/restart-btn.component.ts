@@ -23,7 +23,9 @@ export class RestartBtnComponent implements OnInit {
   }
   restartBtnClicked() {
     if (this.gameService.turn > 0) {
-      this.click.next();
+      // this.click.next();
+      this.gameService.restartGameData();
+      this.gameService.resetGameData();
     }
   }
 }

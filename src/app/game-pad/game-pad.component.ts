@@ -21,8 +21,11 @@ export class GamePadComponent implements OnInit {
   gamePadClicked(gamePad: any) {
     if (!gamePad.status && !this.restarting) {
       this.gameService.updateGameData(gamePad);
+
       this.gameService.setGameData(gamePad);
+
       this.gameService.checkWinner();
+
       this.gameService.drawGamepad(gamePad);
     }
   }
