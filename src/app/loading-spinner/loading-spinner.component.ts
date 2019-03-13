@@ -18,5 +18,4 @@ export class LoadingSpinnerComponent implements OnInit {
   loading() {
     setTimeout(() => { this.load = false; }, 1500);
   }
-
 }

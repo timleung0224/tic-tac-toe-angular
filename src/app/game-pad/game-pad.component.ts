@@ -12,6 +12,7 @@ export class GamePadComponent implements OnInit {
 
   constructor(public gameService: GameService) {
   }
+
   ngOnInit() {
     this.gamePad = this.gameService.gamePad;
     this.restarting = this.gameService.restarting;
@@ -21,11 +22,8 @@ export class GamePadComponent implements OnInit {
   gamePadClicked(gamePad: any) {
     if (!gamePad.status && !this.restarting) {
       this.gameService.updateGameData(gamePad);
-
       this.gameService.setGameData(gamePad);
-
       this.gameService.checkWinner();
-
       this.gameService.drawGamepad(gamePad);
     }
   }

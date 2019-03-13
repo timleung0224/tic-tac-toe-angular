@@ -12,10 +12,7 @@ import * as firebase from 'firebase/app';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { environment } from '../environments/environment';
 
-
-
 const config = environment.FIREBASE_CONFIG;
-
 
 firebase.initializeApp(config);
 
